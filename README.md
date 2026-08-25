@@ -1,6 +1,5 @@
 # Secure Tasks — Zero Trust Project
 
-Initial application layer for the Zero Trust architecture project.
 
 ## Services
 
