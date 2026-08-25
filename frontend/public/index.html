@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secure Tasks</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 16px; }
+    input, button { padding: 10px; margin: 4px 0; }
+    input { width: 100%; box-sizing: border-box; }
+    button { cursor: pointer; }
+    .card { border: 1px solid #ccc; border-radius: 10px; padding: 18px; margin-top: 16px; }
+    .hidden { display: none; }
+    #status { min-height: 24px; }
+    li { margin: 8px 0; }
+    code { background: #f3f3f3; padding: 2px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Secure Tasks</h1>
+  <p>Minimal demo application for the Zero Trust project.</p>
+
+  <section id="loginCard" class="card">
+    <h2>Login</h2>
+    <input id="username" placeholder="Username" autocomplete="username">
+    <input id="password" placeholder="Password" type="password" autocomplete="current-password">
+    <button id="loginBtn">Login</button>
+    <p>Demo accounts: <code>petar / petar123</code> and <code>admin / admin123</code></p>
+  </section>
+
+  <section id="appCard" class="card hidden">
+    <h2 id="welcome"></h2>
+    <button id="logoutBtn">Logout</button>
+
+    <h3>Your tasks</h3>
+    <ul id="taskList"></ul>
+
+    <input id="newTask" placeholder="New task">
+    <button id="addTaskBtn">Add task</button>
+
+    <div id="adminSection" class="hidden">
+      <h3>Admin</h3>
+      <button id="adminBtn">Call /admin</button>
+      <pre id="adminResult"></pre>
+    </div>
+  </section>
+
+  <p id="status"></p>
+  <script src="app.js"></script>
+</body>
+</html>

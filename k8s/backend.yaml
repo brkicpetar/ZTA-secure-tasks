@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: secure-tasks
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+
+    spec:
+      serviceAccountName: backend-sa
+      containers:
+        - name: backend
+          image: secure-tasks/backend:latest
+          imagePullPolicy: Never
+
+          securityContext:
+            runAsNonRoot: true
+            runAsGroup: 1000
+            runAsUser: 1000
+            privileged: false
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+          ports:
+            - containerPort: 4000
+
+          env:
+            - name: REDIS_URL
+              value: "redis://redis:6379"
+
+            - name: JWT_SECRET
+              value: "development-secret"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: secure-tasks
+  labels:
+    app: backend
+spec:
+  selector:
+    app: backend
+
+  ports:
+    - name: http
+      port: 4000
+      targetPort: 4000

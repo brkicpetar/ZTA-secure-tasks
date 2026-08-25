@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: secure-tasks-redis
+    ports:
+      - "6379:6379"
+
+  auth-service:
+    build: ./auth-service
+    container_name: secure-tasks-auth
+    environment:
+      PORT: 4001
+      JWT_SECRET: dev-only-change-me
+    ports:
+      - "4001:4001"
+    depends_on:
+      - redis
+
+  backend:
+    build: ./backend
+    container_name: secure-tasks-backend
+    environment:
+      PORT: 4000
+      JWT_SECRET: dev-only-change-me
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis
+
+  frontend:
+    build: ./frontend
+    container_name: secure-tasks-frontend
+    environment:
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+      - auth-service

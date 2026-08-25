@@ -1,0 +1,50 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: secure-tasks-security-alerts
+  namespace: monitoring
+  labels:
+    release: monitoring
+
+spec:
+  groups:
+    - name: secure-tasks-security
+
+      rules:
+        - alert: HighUnauthorizedRate
+
+          expr: |
+            sum(
+              increase(
+                secure_tasks_http_requests_total{status="401"}[2m]
+              )
+            ) > 20
+
+          
+
+          labels:
+            severity: warning
+            application: secure-tasks
+
+          annotations:
+            summary: "High number of unauthorized requests"
+            description: "More than 20 HTTP 401 responses were detected within 30 seconds."
+
+        - alert: PossiblePrivilegeProbing
+
+          expr: |
+            sum(
+              increase(
+                secure_tasks_http_requests_total{status="403"}[2m]
+              )
+            ) > 10
+
+          
+
+          labels:
+            severity: critical
+            application: secure-tasks
+
+          annotations:
+            summary: "Possible privilege probing detected"
+            description: "More than 10 HTTP 403 responses were detected within 30 seconds."
