@@ -46,10 +46,11 @@ docker compose up --build
 
 Then open http://localhost:3000.
 
-## Security demos
+## Run with K8s
 
-1. Access `/tasks` without a bearer token → 401.
-2. Login as `petar` and call `/admin` → 403.
-3. Login as `admin` and call `/admin` → 200.
+```bash
+./init.sh
+./start.sh
+```
 
-The Kubernetes layer will later add default-deny network segmentation, Kubernetes RBAC, Kyverno policy enforcement, and monitoring.
+Then open http://localhost:3000.
