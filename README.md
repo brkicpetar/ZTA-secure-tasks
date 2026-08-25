@@ -7,6 +7,8 @@ Initial application layer for the Zero Trust architecture project.
 - frontend: http://localhost:3000
 - backend: http://localhost:4000
 - auth-service: http://localhost:4001
+- Grafana: http://localhost:3001
+- Prometheus: http://localhost:9090
 - redis: localhost:6379
 
 ## Demo users
